@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>FI-Plan - Tableau de Bord</title>
+    <link rel="stylesheet" href="styles.css" />
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: Arial, sans-serif;
+      }
+      body {
+        display: flex;
+        background: #f8f5f1;
+        color: #333;
+      }
+      .dashboard-container {
+        display: flex;
+        width: 100%;
+      }
+      .content {
+        flex: 1;
+        padding: 20px;
+        margin-left: 250px;
+        transition: margin-left 0.3s;
+        width: calc(100% - 250px);
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 20px;
+      }
+      .dashboard-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 15px;
+        background: #fff;
+        border-radius: 10px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        position: relative;
+      }
+      .user-info {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        position: relative;
+        cursor: pointer;
+      }
+      .user-avatar {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        object-fit: cover;
+      }
+      .user-name {
+        font-weight: bold;
+      }
+      .dropdown-menu {
+        display: none;
+        position: absolute;
+        top: 50px;
+        right: 0;
+        background: white;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        border-radius: 5px;
+        width: 150px;
+        padding: 10px;
+        z-index: 10;
+      }
+      .dropdown-menu a {
+        display: block;
+        text-decoration: none;
+        color: #333;
+        padding: 8px;
+        transition: background 0.3s;
+      }
+      .dropdown-menu a:hover {
+        background: #f4b400;
+        color: white;
+      }
+      .show-dropdown {
+        display: block;
+      }
+      .dashboard-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 20px;
+      }
+      .card {
+        padding: 20px;
+        border-radius: 12px;
+        text-align: center;
+        box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
+        font-size: 1.2rem;
+      }
+      .blue {
+        background: #5a54d4;
+        color: white;
+      }
+      .yellow {
+        background: #f4b400;
+      }
+      .lightblue {
+        background: #74c0fc;
+      }
+      .charts {
+        display: grid;
+        grid-template-columns: 2fr 1fr;
+        gap: 20px;
+      }
+      .chart-container {
+        padding: 20px;
+        border-radius: 10px;
+        background: white;
+        box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
+      }
+      input[type="date"] {
+        appearance: none; /* Remove default styles */
+
+        padding: 10px 12px;
+        font-size: 16px;
+        font-family: Arial, sans-serif;
+        border: 1px solid #333;
+        border-radius: 5px;
+        background: white;
+        color: #333;
+
+        width: 150px; /* Adjust width */
+        cursor: pointer;
+      }
+
+      /* Style the calendar icon */
+      input[type="date"]::-webkit-calendar-picker-indicator {
+        filter: invert(0.5);
+        cursor: pointer;
+        padding: 5px;
+      }
+
+      /* Add hover effect */
+      input[type="date"]:hover {
+        border-color: #f4b400;
+      }
+
+      /* Add focus effect */
+      input[type="date"]:focus {
+        outline: none;
+        border-color: #5a54d4;
+        box-shadow: 0 0 5px rgba(90, 84, 212, 0.5);
+      }
+
+      @media (max-width: 768px) {
+        .content {
+          margin-left: 0;
+          padding: 20px;
+          width: 100%;
+          grid-template-columns: 1fr;
+        }
+        .dashboard-grid {
+          grid-template-columns: 1fr;
+        }
+        .charts {
+          grid-template-columns: 1fr;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="dashboard-container">
+      <main class="content">
+        <header class="dashboard-header">
+          <div class="date-picker">
+            <input type="date" value="2025-02-12" />
+          </div>
+          <div class="user-info" onclick="toggleDropdown()">
+            <img
+              src="../assets/user.png"
+              alt="User Profile"
+              class="user-avatar"
+            />
+            <span class="user-name">Alexander Aronowitz ▼</span>
+            <div class="dropdown-menu" id="userDropdown">
+              <a href="#">Profil</a>
+              <a href="#">Paramètres</a>
+              <a href="#">Déconnexion</a>
+            </div>
+          </div>
+        </header>
+
+        <section class="dashboard-grid">
+          <div class="card blue">
+            <h3>💲 Budget restant</h3>
+            <p>1,500</p>
+            <a href="#">Définir</a>
+          </div>
+          <div class="card yellow">
+            <h3>📈 Recettes</h3>
+            <p>920</p>
+          </div>
+          <div class="card lightblue">
+            <h3>ℹ️ Conseil</h3>
+            <p>
+              Almost perfect on the assignment, maintain and continue to grow!
+            </p>
+          </div>
+        </section>
+
+        <section class="charts">
+          <div class="chart-container">
+            <h3>Évolution mensuelle des dépenses</h3>
+            <canvas id="lineChart"></canvas>
+          </div>
+          <div class="chart-container">
+            <h3>Dépenses par catégorie</h3>
+            <canvas id="pieChart"></canvas>
+          </div>
+        </section>
+      </main>
+    </div>
+    <script>
+      function toggleDropdown() {
+        document
+          .getElementById("userDropdown")
+          .classList.toggle("show-dropdown");
+      }
+      document.addEventListener("click", function (event) {
+        if (!event.target.closest(".user-info")) {
+          document
+            .getElementById("userDropdown")
+            .classList.remove("show-dropdown");
+        }
+      });
+    </script>
+    <script>
+      let lineChartInstance = null;
+      let pieChartInstance = null;
+
+      function createCharts() {
+        // Destroy existing charts before re-creating them
+        if (lineChartInstance) lineChartInstance.destroy();
+        if (pieChartInstance) pieChartInstance.destroy();
+
+        // Get canvas elements
+        const ctxLine = document.getElementById("lineChart").getContext("2d");
+        const ctxPie = document.getElementById("pieChart").getContext("2d");
+
+        // Line Chart - Évolution mensuelle des dépenses
+        lineChartInstance = new Chart(ctxLine, {
+          type: "line",
+          data: {
+            labels: [
+              "Jan",
+              "Fév",
+              "Mar",
+              "Avr",
+              "Mai",
+              "Juin",
+              "Juil",
+              "Août",
+              "Sep",
+              "Oct",
+              "Nov",
+              "Déc",
+            ],
+            datasets: [
+              {
+                label: "Catégorie A",
+                data: [10, 20, 15, 30, 25, 35, 40, 32, 28, 34, 30, 20],
+                borderColor: "#f4b400",
+                backgroundColor: "rgba(244, 180, 0, 0.2)",
+                borderWidth: 2,
+                fill: true,
+              },
+              {
+                label: "Catégorie B",
+                data: [5, 15, 10, 20, 30, 22, 29, 40, 35, 38, 30, 25],
+                borderColor: "#ff7043",
+                backgroundColor: "rgba(255, 112, 67, 0.2)",
+                borderWidth: 2,
+                fill: true,
+              },
+            ],
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            scales: {
+              y: {
+                beginAtZero: true,
+              },
+            },
+          },
+        });
+
+        // Pie Chart - Dépenses par catégorie
+        pieChartInstance = new Chart(ctxPie, {
+          type: "pie",
+          data: {
+            labels: ["Transport", "Alimentation", "Loisirs", "Autres"],
+            datasets: [
+              {
+                data: [40, 30, 20, 10], // Values in percentage
+                backgroundColor: ["#f4b400", "#ff7043", "#5a54d4", "#74c0fc"],
+                hoverOffset: 4,
+              },
+            ],
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+          },
+        });
+      }
+
+      // Ensure the charts are created **only when the DOM is fully loaded**
+      document.addEventListener("DOMContentLoaded", () => {
+        createCharts();
+      });
+    </script>
+  </body>
+</html>
