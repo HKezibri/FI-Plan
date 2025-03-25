@@ -1,0 +1,102 @@
+.content {
+    padding: 30px;
+    flex: 1;
+  }
+
+.content h2 {
+    margin-bottom: 15px;
+}
+  
+.expense-form {
+display: flex;
+gap: 30px;
+align-items: flex-start;
+flex-wrap: wrap;
+background-color: #fff;
+padding: 30px;
+border-radius: 12px;
+box-shadow: 0 0 10px rgba(0,0,0,0.05);
+}
+
+.left-form, .right-categories {
+flex: 1;
+min-width: 280px;
+display: flex;
+flex-direction: column;
+gap: 15px;
+}
+
+label {
+font-weight: bold;
+margin-bottom: 5px;
+}
+
+input, select, textarea {
+padding: 10px;
+font-size: 14px;
+border-radius: 6px;
+border: 1px solid #ccc;
+}
+
+textarea {
+resize: vertical;
+}
+
+.right-categories {
+background-color: #fcd488;
+padding: 20px;
+border-radius: 12px;
+}
+
+.right-categories h3 {
+margin-top: 0;
+}
+
+.add-category {
+display: flex;
+gap: 10px;
+margin-bottom: 15px;
+}
+
+.add-category input {
+flex: 1;
+}
+
+.add-category button {
+background-color: #000;
+color: #fff;
+border: none;
+font-weight: bold;
+padding: 0 12px;
+font-size: 18px;
+border-radius: 6px;
+cursor: pointer;
+}
+
+.category-list {
+max-height: 200px;
+overflow-y: auto;
+display: flex;
+flex-direction: column;
+gap: 10px;
+}
+
+.form-actions {
+width: 100%;
+margin-top: 20px;
+}
+
+button[type="submit"] {
+background-color: #f7c100;
+border: none;
+padding: 12px 20px;
+font-weight: bold;
+font-size: 16px;
+border-radius: 8px;
+cursor: pointer;
+}
+
+button[type="submit"]:hover {
+background-color: #e6b800;
+}
+  

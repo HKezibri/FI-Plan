@@ -19,12 +19,15 @@ body {
     padding: 20px;
     min-height: 100vh;
     position: fixed;
-    
+    transform: translateX(0);
     transition: transform 0.3s ease-in-out;
     z-index: 1000;
 }
 .sidebar.hidden {
     transform: translateX(-100%);
+}
+.sidebar.visible {
+    transform: translateX(0);
 }
 .sidebar .logo {
     font-size: 22px;
@@ -84,6 +87,12 @@ body {
     background: rgba(255, 255, 255, 0.2);
     border-radius: 5px;
 }
+.content {
+    flex: 1;
+    padding: 30px;
+    margin-left: 300px; /* Space for sidebar */
+    transition: margin-left 0.3s ease;
+}
 
 @media (min-width: 769px) {
     .menu-toggle, .close-menu {
@@ -96,6 +105,10 @@ body {
     }
     .sidebar.visible {
         transform: translateX(0);
+    }
+    .sidebar.visible ~ .content {
+        filter: blur(2px);
+        pointer-events: none;
     }
     .menu-toggle {
         display: flex;
