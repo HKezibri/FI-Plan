@@ -9,13 +9,6 @@ body {
     height: 100vh;
   }
   
-  .sidebar {
-    width: 240px;
-    background-color: #111;
-    color: #fff;
-    padding: 30px 20px;
-  }
-  
   .logo {
     font-size: 24px;
     color: #f7c100;
@@ -25,25 +18,6 @@ body {
   .username {
     font-weight: bold;
     margin-bottom: 20px;
-  }
-  
-  .sidebar nav ul {
-    list-style: none;
-    padding: 0;
-  }
-  
-  .sidebar nav ul li {
-    margin-bottom: 15px;
-  }
-  
-  .sidebar nav ul li a {
-    color: #ddd;
-    text-decoration: none;
-    font-size: 14px;
-  }
-  
-  .sidebar nav ul li a:hover {
-    color: #f7c100;
   }
   
   .dashboard {

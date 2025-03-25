@@ -5,15 +5,18 @@ namespace backend\controllers;
 use backend\app\Authentification;
 use backend\exception\AuthentificationException;
 
-class AuthentificationController {
+class AuthentificationController
+{
     private $auth;
 
-    public function __construct() {
+    public function __construct()
+    {
         session_start();
         $this->auth = new Authentification();
     }
 
-    public function login() {
+    public function login()
+    {
         if ($_SERVER["REQUEST_METHOD"] === "POST") {
             $email = $_POST['email'] ?? '';
             $password = $_POST['password'] ?? '';
@@ -28,6 +31,13 @@ class AuthentificationController {
 
             try {
                 $this->auth->login($user['email'], $user['password'], $password, $user['access_level']);
+
+                $_SESSION['user'] = [
+                    'name' => 'Alexander Aronowitz',
+                    'role' => 'Utilisateur',
+                    'avatar' => '../assets/user.png' // adjust path if needed
+                ];
+
                 header("Location: ../dashboard.html"); // Redirect to dashboard
                 exit();
             } catch (AuthentificationException $e) {
@@ -36,13 +46,15 @@ class AuthentificationController {
         }
     }
 
-    public function logout() {
+    public function logout()
+    {
         $this->auth->logout();
         header("Location: ../login.html");
         exit();
     }
 
-    private function getUserByEmail($email) {
+    private function getUserByEmail($email)
+    {
         // Dummy function, replace with a real database query
         $users = [
             "test@example.com" => [

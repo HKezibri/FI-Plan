@@ -90,7 +90,7 @@ body {
 .content {
     flex: 1;
     padding: 30px;
-    margin-left: 300px; /* Space for sidebar */
+    margin-left: 300px;
     transition: margin-left 0.3s ease;
 }
 
