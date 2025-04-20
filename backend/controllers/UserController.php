@@ -16,7 +16,8 @@ class UserController
             $_SESSION['user'] = [
                 'id' => $user['id'],
                 'full_name' => $user['full_name'],
-                'email' => $user['email']
+                'email' => $user['email'],
+                'role' => $user['role']
             ];
             header('Location: ../frontend/html/dashboard.php');
         } else {

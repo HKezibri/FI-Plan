@@ -19,13 +19,14 @@ class User
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
 
-    public function create($full_name, $email, $hashed_password)
+    public function create($full_name, $email, $role, $hashed_password)
     {
-        $sql = "INSERT INTO users (full_name, email, password) VALUES (:full_name, :email, :password)";
+        $sql = "INSERT INTO users (full_name, email, role, password) VALUES (:full_name, :email, :role, :password)";
         $stmt = $this->conn->prepare($sql);
         return $stmt->execute([
             'full_name' => $full_name,
             'email' => $email,
+            'role' => $role,
             'password' => $hashed_password
         ]);
     }
