@@ -11,7 +11,7 @@
   <ul class="nav-links">
     <li><a href="dashboard.php">🏠 Tableau de bord</a></li>
     <li><a href="statistics.php">📊 Statistiques</a></li>
-    <li><a href="export_expense.php">📤 Exporter dépenses</a></li>
+    <li><a href="export_transactions.php">📤 Exporter transactions</a></li>
     <li><a href="add_expense.php">➕ Ajouter dépense</a></li>
     <li><a href="add_income.php">➕ Ajouter recette</a></li>
     <li><a href="settings.php">⚙️ Paramètres</a></li>

@@ -72,4 +72,3 @@ new Chart(document.getElementById('dailyChart'), {
   }
 });
 
-
