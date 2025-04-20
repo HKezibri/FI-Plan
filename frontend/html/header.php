@@ -9,6 +9,8 @@
     <link rel="stylesheet" href="../css/transactions_style.css" />
     <link rel="stylesheet" href="../css/add_expense_style.css" />
     <link rel="stylesheet" href="../css/settings_style.css">
+    <link rel="stylesheet" href="../css/statistics_style.css">
+
 
     <script src="../js/sidebarScript.js" defer></script>
     <script src="../js/userinfobarScript.js" defer></script>
