@@ -1,58 +1,58 @@
-<!DOCTYPE html>
-<html lang="fr">
+<?php
+session_start();
+if (!isset($_SESSION['user'])) {
+    header('Location: login.php');
+    exit;
+}
 
-<head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>FI-PLAN | Ajouter une Recette</title>
-    <link rel="stylesheet" href="../css/sidebar_style.css" />
-    <link rel="stylesheet" href="../css/add_expense_style.css" /> <!-- Reuse style -->
-    <script src="../js/sidebarScript.js" defer></script>
-    <script src="../js/add_income_script.js" defer></script>
-</head>
+include '../html/header.php';
+require_once '../../backend/models/Category.php';
 
-<body>
-    <div class="dashboard-container">
-        <?php include '../components/sidebar.php'; ?>
+$categoryModel = new Category();
+$categories = $categoryModel->getIncomeCategories();
 
-        <main class="content">
-            <h2>Ajouter une Recette</h2>
+if (isset($_SESSION['message'])): ?>
+    <p style="color: green;"><?= $_SESSION['message'];
+    unset($_SESSION['message']); ?></p>
+<?php endif;
+?>
+<h2>Ajouter une Recette</h2>
 
-            <form action="../../backend/index.php?action=add_income" method="POST" class="expense-form" id="incomeForm">
-                <div class="left-form">
-                    <label for="date">Date</label>
-                    <input type="date" id="date" name="date" required>
+<form action="../../backend/index.php?action=add_income" method="POST" class="expense-form" id="incomeForm">
+    <div class="left-form">
+        <label for="date">Date</label>
+        <input type="date" id="date" name="transaction_date" required>
 
-                    <label for="amount">Montant (€)</label>
-                    <input type="number" id="amount" name="amount" step="0.01" required>
+        <label for="amount">Montant (€)</label>
+        <input type="number" id="amount" name="amount" step="0.01" required>
 
-                    <label for="comment">Commentaire (optionnel)</label>
-                    <textarea id="comment" name="comment" rows="3"></textarea>
-                </div>
-
-                <div class="right-categories">
-                    <h3>Catégories de recette</h3>
-
-                    <div class="add-category">
-                        <input type="text" id="newIncomeCategory" placeholder="Ajouter une catégorie" />
-                        <button type="button" id="addIncomeCategoryBtn">+</button>
-                    </div>
-
-                    <div class="category-list" id="incomeCategoryList">
-                        <label><input type="checkbox" name="categories[]" value="Alternance"> Alternance</label>
-                        <label><input type="checkbox" name="categories[]" value="Job étudiant"> Job étudiant</label>
-                        <label><input type="checkbox" name="categories[]" value="Virement"> Virement</label>
-                        <label><input type="checkbox" name="categories[]" value="Bourse"> Bourse</label>
-                        <label><input type="checkbox" name="categories[]" value="Autre"> Autre</label>
-                    </div>
-                </div>
-
-                <div class="form-actions">
-                    <button type="submit">Ajouter la recette</button>
-                </div>
-            </form>
-        </main>
+        <label for="comment">Commentaire (optionnel)</label>
+        <textarea id="comment" name="comment" rows="3"></textarea>
     </div>
-</body>
 
-</html>
+    <div class="right-categories">
+        <h3>Catégories de recette</h3>
+
+        <div class="add-category">
+            <input type="text" id="newCategoryInput" placeholder="Ajouter une catégorie" />
+            <button type="button" id="addCategoryBtn">+</button>
+        </div>
+
+        <div class="category-list" id="categoryList">
+            <?php foreach ($categories as $cat): ?>
+                <label>
+                    <input type="radio" name="category_name" value="<?= htmlspecialchars($cat['name']) ?>" required />
+                    <?= htmlspecialchars($cat['name']) ?>
+                </label>
+            <?php endforeach; ?>
+        </div>
+
+    </div>
+
+    <div class="form-actions">
+        <button type="submit">Ajouter la recette</button>
+    </div>
+</form>
+</main>
+</div>
+<?php include '../html/footer.php'; ?>

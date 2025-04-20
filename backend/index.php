@@ -75,15 +75,12 @@ try {
             }
             break;
 
-
         case 'add_income':
-            if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-                // $controller->addIncome($_POST);
-            } else {
-                include '../frontend/html/add_income.php';
+            if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_SESSION['user'])) {
+                $controller = new TransactionController();
+                $controller->addIncome($_POST, $_SESSION['user']['id']);
             }
             break;
-
 
         default:
             echo json_encode(['error' => 'No valid action provided']);

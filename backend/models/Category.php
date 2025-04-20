@@ -17,4 +17,11 @@ class Category
         $stmt = $this->conn->query($sql);
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
+
+    public function getIncomeCategories()
+    {
+        $sql = "SELECT id, name FROM categories WHERE type = 'income'";
+        $stmt = $this->conn->query($sql);
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
 }
