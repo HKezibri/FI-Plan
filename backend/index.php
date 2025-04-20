@@ -82,6 +82,13 @@ try {
             }
             break;
 
+        case 'update_user':
+            if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_SESSION['user'])) {
+                $controller = new UserController();
+                $controller->update($_POST);
+            }
+            break;
+
         case 'set_budget':
             if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_SESSION['user'])) {
                 require_once './models/Budget.php';

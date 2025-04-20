@@ -1,0 +1,57 @@
+.settings-container {
+    max-width: 700px;
+    margin: 30px auto;
+    padding: 20px;
+    background: #fff;
+    border-radius: 8px;
+    font-family: sans-serif;
+  }
+  
+  .settings-section {
+    margin-bottom: 30px;
+  }
+  
+  .settings-title {
+    font-size: 22px;
+    margin-bottom: 20px;
+    color: #333;
+  }
+  
+  .settings-label {
+    display: block;
+    font-weight: bold;
+    margin: 12px 0 6px;
+    color: #222;
+  }
+  
+  .settings-input {
+    width: 100%;
+    padding: 10px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    box-sizing: border-box;
+  }
+  
+  .settings-btn {
+    margin-top: 15px;
+    padding: 10px 20px;
+    background-color: #f7c100;
+    border: none;
+    color: #000;
+    font-weight: bold;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .settings-btn:hover {
+    background-color: #e0ac00;
+  }
+  
+  .settings-divider {
+    margin: 40px 0;
+    border: none;
+    border-top: 1px solid #ccc;
+  }
+  

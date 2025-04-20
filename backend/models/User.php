@@ -30,4 +30,27 @@ class User
             'password' => $hashed_password
         ]);
     }
+
+    public function getById($id)
+    {
+        $sql = "SELECT * FROM users WHERE id = :id";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->execute(['id' => $id]);
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+    }
+
+    public function updateInfo($id, $full_name, $email)
+    {
+        $sql = "UPDATE users SET full_name = :full_name, email = :email WHERE id = :id";
+        $stmt = $this->conn->prepare($sql);
+        return $stmt->execute(['full_name' => $full_name, 'email' => $email, 'id' => $id]);
+    }
+
+    public function updatePassword($id, $password)
+    {
+        $sql = "UPDATE users SET password = :password WHERE id = :id";
+        $stmt = $this->conn->prepare($sql);
+        return $stmt->execute(['password' => $password, 'id' => $id]);
+    }
+
 }
