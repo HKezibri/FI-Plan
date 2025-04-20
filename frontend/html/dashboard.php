@@ -30,6 +30,12 @@ $remaining = $budgetModel->getRemainingBudget($user_id);
 
 $dailyData = $transactionModel->getDailyIncomeExpenseThisMonth($user_id);
 
+require_once '../../backend/models/Tip.php';
+
+$tipModel = new Tip();
+
+// Always show a random tip (whether GET is set or not)
+$randomTip = $tipModel->getRandomTip();
 
 ?>
 <script>
