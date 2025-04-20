@@ -1,4 +1,12 @@
-<?php include '../html/header.php'; ?>
+<?php
+session_start();
+if (!isset($_SESSION['user'])) {
+  header('Location: login.php');
+  exit;
+}
+
+include '../html/header.php';
+?>
 
 <section class="top-card">
   <h3>Budget restant</h3>

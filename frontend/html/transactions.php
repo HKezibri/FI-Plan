@@ -1,77 +1,60 @@
-<!DOCTYPE html>
-<html lang="fr">
+<?php
+session_start();
+if (!isset($_SESSION['user'])) {
+    header('Location: login.php');
+    exit;
+}
 
-<head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>FI-PLAN | Transactions</title>
-    <link rel="stylesheet" href="../css/sidebar_style.css" />
-    <link rel="stylesheet" href="../css/transactions_style.css" />
-    <script src="../js/sidebarScript.js" defer></script>
-</head>
+include '../html/header.php';
+require_once '../../backend/models/Transaction.php';
 
-<body>
-    <div class="dashboard-container">
-        <?php include '../components/sidebar.php'; ?>
+$user_id = $_SESSION['user']['id'];
+$transactionModel = new Transaction();
+$transactions = $transactionModel->getAllByUser($user_id);
+?>
 
-        <main class="content">
-            <h2>Historique des Transactions</h2>
+<h2>Historique des Transactions</h2>
 
-            <table class="transaction-table">
-                <thead>
-                    <tr>
-                        <th>Nom</th>
-                        <th>Date</th>
-                        <th>Type</th>
-                        <th>Montant</th>
-                        <th>Action</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr class="expense">
-                        <td>Hospital</td>
-                        <td>Hier, 14:00</td>
-                        <td>Dépense</td>
-                        <td class="amount">- €1,900</td>
-                        <td>
-                            <button class="delete-btn" title="Supprimer">🗑️</button>
-                        </td>
-                    </tr>
-                    <tr class="income">
-                        <td>Alfredo Torres</td>
-                        <td>Hier, 10:00</td>
-                        <td>Recette</td>
-                        <td class="amount">+ €2,000</td>
-                        <td>
-                            <button class="delete-btn" title="Supprimer">🗑️</button>
-                        </td>
-                    </tr>
-                    <tr class="income">
-                        <td>Claudia Alves</td>
-                        <td>Hier, 04:00</td>
-                        <td>Recette</td>
-                        <td class="amount">+ €2,500</td>
-                        <td>
-                            <button class="delete-btn" title="Supprimer">🗑️</button>
-                        </td>
-                    </tr>
-                    <tr class="expense">
-                        <td>Installment</td>
-                        <td>1 mois, 16:00</td>
-                        <td>Dépense</td>
-                        <td class="amount">- €200</td>
-                        <td>
-                            <button class="delete-btn" title="Supprimer">🗑️</button>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-        </main>
+<?php if (empty($transactions)): ?>
+    <p>Aucune transaction trouvée.</p>
+<?php else: ?>
+    <table class="transaction-table">
+        <thead>
+            <tr>
+                <th>Nom</th>
+                <th>Date</th>
+                <th>Type</th>
+                <th>Montant</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            <?php foreach ($transactions as $tx): ?>
 
-    </div>
+                <tr class="<?= $tx['type'] === 'expense' ? 'expense' : 'income' ?>">
+                    <td><?= htmlspecialchars($tx['category_name']) ?></td>
+                    <td><?= date('d/m/Y', strtotime($tx['transaction_date'])) ?></td>
+                    <td><?= ucfirst($tx['type']) ?></td>
+                    <td class="amount"><?= $tx['type'] === 'expense' ? '-' : '+' ?>
+                        € <?= number_format($tx['amount'], 2, ',', ' ') ?></td>
+                    <td>
+                        <form action="../../backend/index.php?action=delete_transaction" method="POST"
+                            onsubmit="return confirm('Supprimer cette transaction ?');">
+                            <input type="hidden" name="id" value="<?= $tx['id'] ?>">
+                            <button type="submit" class="delete-btn" title="Supprimer">🗑️</button>
+                        </form>
 
-    <script src="../js/transactionsScript.js" defer></script>
+                    </td>
+                </tr>
 
-</body>
+            <?php endforeach; ?>
+        <?php endif; ?>
 
-</html>
+
+    </tbody>
+</table>
+</main>
+
+
+
+<?php include '../html/footer.php'; ?>
