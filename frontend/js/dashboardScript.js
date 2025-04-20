@@ -19,27 +19,43 @@ new Chart(document.getElementById('categoryChart'), {
 });
 
 
-const months = monthlyComparisonData.map(item => item.month);
-const expenses = monthlyComparisonData.map(item => parseFloat(item.total_expense));
-const incomes = monthlyComparisonData.map(item => parseFloat(item.total_income));
 
-new Chart(document.getElementById('monthlyChart'), {
+
+const now = new Date();
+const daysInMonth = new Date(now.getFullYear(), now.getMonth() + 1, 0).getDate();
+
+const labels = Array.from({ length: daysInMonth }, (_, i) => `${i + 1}`);
+
+// Map API data into arrays with 0 fallback
+const incomeMap = {};
+const expenseMap = {};
+
+dailyData.forEach(entry => {
+  incomeMap[entry.day] = parseFloat(entry.total_income);
+  expenseMap[entry.day] = parseFloat(entry.total_expense);
+});
+
+const incomeData = labels.map(day => incomeMap[day] || 0);
+const expenseData = labels.map(day => expenseMap[day] || 0);
+
+// Chart.js config
+new Chart(document.getElementById('dailyChart'), {
   type: 'line',
   data: {
-    labels: months,
+    labels,
     datasets: [
       {
-        label: 'Dépenses',
-        data: expenses,
-        borderColor: 'red',
-        backgroundColor: 'rgba(255, 0, 0, 0.1)',
+        label: 'Recettes',
+        data: incomeData,
+        borderColor: 'green',
+        backgroundColor: 'rgba(0,255,0,0.1)',
         fill: true
       },
       {
-        label: 'Recettes',
-        data: incomes,
-        borderColor: 'green',
-        backgroundColor: 'rgba(0, 255, 0, 0.1)',
+        label: 'Dépenses',
+        data: expenseData,
+        borderColor: 'red',
+        backgroundColor: 'rgba(255,0,0,0.1)',
         fill: true
       }
     ]
@@ -47,14 +63,13 @@ new Chart(document.getElementById('monthlyChart'), {
   options: {
     responsive: true,
     plugins: {
-      legend: {
-        position: 'top'
-      },
+      legend: { position: 'top' },
       title: {
         display: true,
-        text: 'Évolution mensuelle des recettes et dépenses'
+        text: 'Évolution quotidienne des recettes et dépenses (ce mois)'
       }
     }
   }
 });
+
 

@@ -86,6 +86,47 @@ class Transaction
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
+    public function getMonthlyExpensesTotal($userId, $month)
+    {
+        $sql = "SELECT SUM(amount) as total FROM transactions 
+                WHERE user_id = :user_id AND type = 'expense'
+                AND DATE_FORMAT(transaction_date, '%Y-%m') = :month";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->execute(['user_id' => $userId, 'month' => $month]);
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+        return $result['total'] ?? 0;
+    }
+
+    public function getMonthlyIncomesTotal($userId, $month)
+    {
+        $sql = "SELECT SUM(amount) as total FROM transactions 
+                WHERE user_id = :user_id AND type = 'income'
+                AND DATE_FORMAT(transaction_date, '%Y-%m') = :month";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->execute(['user_id' => $userId, 'month' => $month]);
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+        return $result['total'] ?? 0;
+    }
+
+    public function getDailyIncomeExpenseThisMonth($userId)
+    {
+        $sql = "
+          SELECT 
+            DAY(transaction_date) as day,
+            SUM(CASE WHEN type = 'income' THEN amount ELSE 0 END) AS total_income,
+            SUM(CASE WHEN type = 'expense' THEN amount ELSE 0 END) AS total_expense
+          FROM transactions
+          WHERE user_id = :user_id
+            AND MONTH(transaction_date) = MONTH(CURRENT_DATE())
+            AND YEAR(transaction_date) = YEAR(CURRENT_DATE())
+          GROUP BY day
+          ORDER BY day
+        ";
+
+        $stmt = $this->conn->prepare($sql);
+        $stmt->execute(['user_id' => $userId]);
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
 
 
 }

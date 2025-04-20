@@ -82,6 +82,16 @@ try {
             }
             break;
 
+        case 'set_budget':
+            if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_SESSION['user'])) {
+                require_once './models/Budget.php';
+                $budget = new Budget();
+                $budget->setOrUpdate($_SESSION['user']['id'], $_POST['amount']);
+                header('Location: ../frontend/html/dashboard.php');
+                exit;
+            }
+            break;
+
         default:
             echo json_encode(['error' => 'No valid action provided']);
             break;
