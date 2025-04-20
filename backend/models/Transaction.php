@@ -46,4 +46,46 @@ class Transaction
         ]);
     }
 
+    public function getExpensesByCategory($userId)
+    {
+        $sql = "SELECT category_name, SUM(amount) as total
+                FROM transactions
+                WHERE user_id = :user_id AND type = 'expense'
+                GROUP BY category_name";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->execute(['user_id' => $userId]);
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    public function getExpensesByMonth($userId)
+    {
+        $sql = "SELECT DATE_FORMAT(transaction_date, '%Y-%m') as month, SUM(amount) as total
+                FROM transactions
+                WHERE user_id = :user_id AND type = 'expense'
+                GROUP BY month
+                ORDER BY month";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->execute(['user_id' => $userId]);
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    public function getIncomeAndExpensesByMonth($userId)
+    {
+        $sql = "
+          SELECT 
+            DATE_FORMAT(transaction_date, '%Y-%m') AS month,
+            SUM(CASE WHEN type = 'expense' THEN amount ELSE 0 END) AS total_expense,
+            SUM(CASE WHEN type = 'income' THEN amount ELSE 0 END) AS total_income
+          FROM transactions
+          WHERE user_id = :user_id
+          GROUP BY month
+          ORDER BY month;
+        ";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->execute(['user_id' => $userId]);
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+
+
 }

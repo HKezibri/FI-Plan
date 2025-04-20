@@ -6,7 +6,22 @@ if (!isset($_SESSION['user'])) {
 }
 
 include '../html/header.php';
+
+require_once '../../backend/models/Transaction.php';
+
+$transactionModel = new Transaction();
+$user_id = $_SESSION['user']['id'];
+
+$expensesByCategory = $transactionModel->getExpensesByCategory($user_id);
+$expensesByMonth = $transactionModel->getExpensesByMonth($user_id);
+$monthlyComparison = $transactionModel->getIncomeAndExpensesByMonth($user_id);
+
 ?>
+<script>
+  const categoryData = <?= json_encode($expensesByCategory) ?>;
+  const monthlyData = <?= json_encode($expensesByMonth) ?>;
+  const monthlyComparisonData = <?= json_encode($monthlyComparison) ?>;
+</script>
 
 <section class="top-card">
   <h3>Budget restant</h3>
