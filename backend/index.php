@@ -69,13 +69,12 @@ try {
             break;
 
         case 'add_expense':
-            if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-                // Handle form submission
-                // e.g. $controller->addExpense($_POST);
-            } else {
-                include '../frontend/html/add_expense.php';
+            if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_SESSION['user'])) {
+                $controller = new TransactionController();
+                $controller->addExpense($_POST, $_SESSION['user']['id']);
             }
             break;
+
 
         case 'add_income':
             if ($_SERVER['REQUEST_METHOD'] === 'POST') {

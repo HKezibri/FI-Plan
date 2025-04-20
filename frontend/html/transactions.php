@@ -11,6 +11,12 @@ require_once '../../backend/models/Transaction.php';
 $user_id = $_SESSION['user']['id'];
 $transactionModel = new Transaction();
 $transactions = $transactionModel->getAllByUser($user_id);
+
+if (isset($_SESSION['message'])): ?>
+    <p style="color: green;"><?= $_SESSION['message'];
+    unset($_SESSION['message']); ?></p>
+<?php endif;
+
 ?>
 
 <h2>Historique des Transactions</h2>

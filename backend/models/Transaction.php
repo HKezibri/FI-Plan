@@ -26,4 +26,24 @@ class Transaction
         return $stmt->execute(['id' => $id, 'user_id' => $userId]);
     }
 
+    public function add($data)
+    {
+        $sql = "INSERT INTO transactions (
+                  user_id, category_name, type, amount, payment_method, comment, transaction_date
+                ) VALUES (
+                  :user_id, :category_name, :type, :amount, :payment_method, :comment, :transaction_date
+                )";
+
+        $stmt = $this->conn->prepare($sql);
+        return $stmt->execute([
+            'user_id' => $data['user_id'],
+            'category_name' => $data['category_name'],
+            'type' => $data['type'], // will be 'expense'
+            'amount' => $data['amount'],
+            'payment_method' => $data['payment_method'],
+            'comment' => $data['comment'],
+            'transaction_date' => $data['transaction_date']
+        ]);
+    }
+
 }
