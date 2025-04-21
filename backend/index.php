@@ -9,7 +9,7 @@ require_once __DIR__ . '/controllers/TransactionController.php';
 
 
 // Routing based on 'action' in query string
-$action = $_GET['action'] ?? 'login';
+$action = $_GET['action'] ?? 'welcome';
 
 try {
     switch ($action) {
@@ -43,13 +43,13 @@ try {
             break;
 
         case 'dashboard':
-            include '../frontend/html/dashboard.html';
+            include '../frontend/html/dashboard.php';
             break;
 
         case 'transactions':
             include '../frontend/html/transactions.php';
             $controller = new TransactionController();
-            $controller->index(1);
+            $controller->index($_SESSION['user']['id']);
             break;
 
         case 'get_transactions':

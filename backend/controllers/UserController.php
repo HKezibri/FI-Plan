@@ -62,7 +62,7 @@ class UserController
                 'full_name' => $full_name,
                 'email' => $email
             ];
-            header('Location: ../frontend/html/dashboard.php');
+            header('Location: ../frontend/html/login.php');
         } else {
             $_SESSION['register_error'] = "Une erreur est survenue lors de l'inscription.";
             header('Location: ../frontend/html/register.php');
