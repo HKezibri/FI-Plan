@@ -32,6 +32,16 @@
     border-radius: 6px;
     box-sizing: border-box;
   }
+
+  .settings-email {
+    width: 100%;
+    padding: 10px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    box-sizing: border-box;
+    background-color: #c8c6c6;
+  }
   
   .settings-btn {
     margin-top: 15px;

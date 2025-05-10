@@ -1,10 +1,10 @@
 <?php
 class Database
 {
-    private $host = 'localhost';
-    private $db_name = 'financeplan';
-    private $username = 'root';
-    private $password = '';
+    private $host = 'mysql-key.alwaysdata.net';
+    private $db_name = 'key_fi-plan';
+    private $username = 'key';
+    private $password = 'mshibakezibri';
     public $conn;
 
     public function connect()

@@ -17,6 +17,5 @@
     <li><a href="add_income.php">➕ Ajouter recette</a></li>
     <li><a href="settings.php">⚙️ Paramètres</a></li>
     <li><a href="../../backend/index.php?action=logout">🚪 Déconnexion</a></li>
-    <li><a href="dashboard.php?refresh_tip=true">💡 Conseils</a></li>
   </ul>
 </aside>

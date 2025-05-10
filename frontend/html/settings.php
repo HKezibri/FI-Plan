@@ -25,7 +25,8 @@ $user = $_SESSION['user'];
         required>
 
     <label class="settings-label">Email</label>
-    <input type="email" name="email" class="settings-input" value="<?= htmlspecialchars($user['email']) ?>" required>
+    <input type="email" name="email" class="settings-email" readonly value="<?= htmlspecialchars($user['email']) ?>"
+        required>
 
     <button type="submit" name="update_info" class="settings-btn">Mettre à jour</button>
 </form>

@@ -51,25 +51,56 @@ body {
     font-weight: bold;
   }
   
-  .charts {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 30px;
-    margin-bottom: 30px;
-  }
-  
-  .chart {
-    background-color: #fff;
-    flex: 1;
-    padding: 20px;
-    border-radius: 12px;
-    box-shadow: 0 0 10px rgba(0,0,0,0.05);
-  }
-  
   .tips {
     background-color: #fff;
     padding: 20px;
     border-radius: 12px;
     box-shadow: 0 0 10px rgba(0,0,0,0.05);
   }
+
+  .charts {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 3%;
+    justify-content: center;
+    border-radius: 0;
+    padding: 0 0 35px 0;
+    box-shadow: none;
+  }
+
+  /* Shared chart container styling */
+.chart-categ,
+.chart-evo {
+  background-color: #fff;
+  padding: 25px;
+  border-radius: 12px;
+  box-shadow: 0 0 8px rgba(0, 0, 0, 0.04);
+  flex: 1 1 400px;
+  max-width: 500px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+ 
+.chart-categ canvas {
+  width: 100% !important;
+  max-width: 320px;
+  aspect-ratio: 1 / 1;
+  height: auto !important;
+}
+ 
+ 
+ 
+@media (max-width: 768px) {
+  .charts {
+    flex-direction: column;
+    align-items: center;
+  }
+ 
+  .chart-categ,
+  .chart-evo {
+    width: 100%;
+    max-width: 100%;
+  }
+}
   

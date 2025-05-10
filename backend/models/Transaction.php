@@ -38,7 +38,7 @@ class Transaction
     return $stmt->execute([
       'user_id' => $data['user_id'],
       'category_name' => $data['category_name'],
-      'type' => $data['type'], // will be 'expense'
+      'type' => $data['type'],
       'amount' => $data['amount'],
       'payment_method' => $data['payment_method'],
       'comment' => $data['comment'],

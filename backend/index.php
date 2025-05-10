@@ -6,6 +6,7 @@ session_start();
 require_once __DIR__ . '/config/database.php';
 require_once __DIR__ . '/controllers/UserController.php';
 require_once __DIR__ . '/controllers/TransactionController.php';
+require_once __DIR__ . '/controllers/BudgetController.php';
 
 
 // Routing based on 'action' in query string
@@ -85,17 +86,14 @@ try {
         case 'update_user':
             if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_SESSION['user'])) {
                 $controller = new UserController();
-                $controller->update($_POST);
+                $controller->update(post: $_POST);
             }
             break;
 
         case 'set_budget':
             if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_SESSION['user'])) {
-                require_once './models/Budget.php';
-                $budget = new Budget();
-                $budget->setOrUpdate($_SESSION['user']['id'], $_POST['amount']);
-                header('Location: ../frontend/html/dashboard.php');
-                exit;
+                $controller = new BudgetController();
+                $controller->setUpdateBudget($_POST, $_SESSION['user']['id']);
             }
             break;
 

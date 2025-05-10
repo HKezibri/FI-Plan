@@ -83,11 +83,11 @@ class UserController
         // Update info
         if (isset($post['update_info'])) {
             $full_name = trim($post['full_name']);
-            $email = trim($post['email']);
+            //$email = trim($post['email']);
 
             if ($userModel->updateInfo($userId, $full_name, $email)) {
                 $_SESSION['user']['full_name'] = $full_name;
-                $_SESSION['user']['email'] = $email;
+                //$_SESSION['user']['email'] = $email;
                 $_SESSION['settings_message'] = "Informations mises à jour.";
             } else {
                 $_SESSION['settings_message'] = "Erreur lors de la mise à jour.";

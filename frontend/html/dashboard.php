@@ -48,6 +48,15 @@ $randomTip = $tipModel->getRandomTip();
 
 <section class="top-card">
   <h3>Budget restant</h3>
+
+  <?php
+  if (isset($_SESSION['message'])): ?>
+    <p style="color: green;"><?= $_SESSION['message'];
+    unset($_SESSION['message']); ?></p>
+  <?php endif;
+
+  ?>
+
   <div class="budget-box">
     <strong>€<?= number_format($remaining, 2, ',', ' ') ?></strong>
     <form action="../../backend/index.php?action=set_budget" method="POST" style="display:inline;">
@@ -59,11 +68,11 @@ $randomTip = $tipModel->getRandomTip();
 </section>
 
 <section class="charts">
-  <div class="chart">
+  <div class="chart-categ">
     <h4>Dépenses par catégorie</h4>
     <canvas id="categoryChart"></canvas>
   </div>
-  <div class="chart">
+  <div class="chart-evo">
     <h4>Évolution du mois des recettes et dépenses</h4>
     <canvas id="dailyChart"></canvas>
   </div>

@@ -23,7 +23,7 @@ $user = $_SESSION['user'];
         </div>
 
         <div class="user-details">
-            <span class="username"><?= htmlspecialchars($user['full_name']) ?></span>
+            <span class="username" style="margin-bottom: 0px;"><?= htmlspecialchars($user['full_name']) ?></span>
             <span class="role"><?= htmlspecialchars($user['role']) ?></span>
         </div>
         <img src="../assets/user.png" alt="User Avatar" class="user-avatar">
